@@ -202,8 +202,10 @@ class ShowcaseController(PackageController):
 
         try:
             c.pkg_dict = get_action('package_show')(context, data_dict)
-            c.showcase_list = get_action('ckanext_package_showcase_list')(
-                context, {'package_id': c.pkg_dict['id']})
+            c.showcase_list = get_action('package_search')(context, {
+                'q': 'dataset_names:%s' % c.pkg_dict['name'],
+                'fq': 'dataset_type:showcase',
+            })['results']
         except NotFound:
             abort(404, _('Dataset not found'))
         except logic.NotAuthorized:

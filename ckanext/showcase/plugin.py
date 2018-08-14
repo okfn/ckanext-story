@@ -224,18 +224,21 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             pkg_dict['notes'])
 
         # Add embedded datasets
-        dataset_ids = set()
+        dataset_names = set()
         pkg_dict['embedded_datasets'] = []
         for element in pkg_dict['embedded_elements']:
             if element['type'] == 'dataset':
-                if element['dataset'] in dataset_ids:
+                if element['dataset'] in dataset_names:
                     continue
-                dataset_ids.add(element['dataset'])
+                dataset_names.add(element['dataset'])
                 dataset = tk.get_action('package_show')(context, {'id': element['dataset']})
                 pkg_dict['embedded_datasets'].append({
                     'name': dataset['name'],
                     'title': dataset['title'],
                 })
+
+        # Add dataset names (for searching)
+        pkg_dict['dataset_names'] = ' '.join(dataset_names)
 
         # Add dataset count
         pkg_dict['num_datasets'] = len(pkg_dict['embedded_datasets'])
@@ -264,7 +267,6 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             pkg_dict.pop('showcase_notes_formatted', None)
             pkg_dict.pop('embedded_elements', None)
             pkg_dict.pop('embedded_datasets', None)
-            pkg_dict.pop('num_datasets', None)
         return pkg_dict
 
     def before_search(self, search_params):
