@@ -25,7 +25,6 @@
       {% endblock %}
 
       {% block package_basic_fields_description %}
-        {% resource 'ckanext-showcase/simplemde' %}
         {{ form.markdown('notes', id='field-notes', label=_('Description'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes) }}
       {% endblock %}
 

@@ -1,12 +1,13 @@
 {% extends 'page.html' %}
 
+
 {% set pkg = c.pkg_dict %}
 
 {% block subtitle %}{{ _('Showcases') }}{% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <link rel="stylesheet" href="{{ g.site_url }}/ckanext_showcase.css" />
+  {% resource 'ckanext-showcase/general' %}
 {% endblock %}
 
 {% block breadcrumb_content_selected %}{% endblock %}
