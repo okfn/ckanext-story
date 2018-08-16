@@ -1,6 +1,7 @@
 import re
 import logging
 import ckan.lib.helpers as h
+from ckan.common import config
 from ckan.plugins import toolkit as tk
 log = logging.getLogger(__name__)
 
@@ -32,6 +33,10 @@ def get_site_statistics():
         tk.get_action('organization_list')({}, {}))
 
     return stats
+
+
+def is_disqus_enabled():
+    return bool(config.get('disqus.name'))
 
 
 def search_emdedded_elements(text):
