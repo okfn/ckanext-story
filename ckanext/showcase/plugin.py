@@ -96,7 +96,8 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
     def get_helpers(self):
         return {
             'facet_remove_field': showcase_helpers.facet_remove_field,
-            'get_site_statistics': showcase_helpers.get_site_statistics
+            'get_site_statistics': showcase_helpers.get_site_statistics,
+            'is_disqus_enabled': showcase_helpers.is_disqus_enabled,
         }
 
     # IFacets
