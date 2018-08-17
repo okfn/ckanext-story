@@ -55,6 +55,10 @@
         {{ form.select('allow_commenting', label='Allow commenting', id='field-allow_commenting', options=[{'text':'Yes', 'value': True},{'text': 'No', 'value': False}], selected=data.allow_commenting, error=errors.allow_commenting) }}
       {% endif %}
     {% endblock %}
+
+    {% block package_metadata_linked_stories %}
+      {{ form.input('linked_stories', label='Linked stories', id='field-linked-stories', placeholder='', value=data.linked_stories, error=errors.linked_stories, classes=['control-medium']) }}
+    {% endblock %}
   {% endblock %}
 
   {% block form_actions %}
