@@ -56,8 +56,8 @@
       {% endif %}
     {% endblock %}
 
-    {% block package_metadata_linked_stories %}
-      {{ form.input('linked_stories', label='Linked stories', id='field-linked-stories', placeholder='', value=data.linked_stories, error=errors.linked_stories, classes=['control-medium']) }}
+    {% block package_metadata_related_stories %}
+      {{ form.input('related_stories', label='Linked stories', id='field-linked-stories', placeholder='', value=data.related_stories, error=errors.related_stories, classes=['control-medium']) }}
     {% endblock %}
   {% endblock %}
 

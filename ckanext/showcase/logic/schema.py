@@ -55,7 +55,7 @@ def showcase_base_schema():
     schema['original_related_item_id'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
-    schema['linked_stories'] = [
+    schema['related_stories'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
 
@@ -128,7 +128,7 @@ def showcase_show_schema():
     schema['original_related_item_id'] = [
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
-    schema['linked_stories'] = [
+    schema['related_stories'] = [
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
 
