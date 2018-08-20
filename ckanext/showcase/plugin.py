@@ -279,7 +279,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
         fq = search_params.get('fq', '')
         filter = 'dataset_type:{0}'.format(DATASET_TYPE_NAME)
         if filter not in fq:
-            if not tk.asbool(config.get('ckan.showcase.include_into_search', False)):
+            if not tk.asbool(config.get('ckanext.showcase.include_into_search', False)):
                 search_params.update({'fq': fq + " -" + filter})
         return search_params
 
