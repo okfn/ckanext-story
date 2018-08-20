@@ -6,7 +6,7 @@ import ckan.plugins as plugins
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.helpers as h
 from ckan.plugins import toolkit as tk
-from ckan.common import OrderedDict
+from ckan.common import OrderedDict, config
 from ckan import model as ckan_model
 
 from routes.mapper import SubMapper
@@ -273,13 +273,14 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
     def before_search(self, search_params):
         '''
         Unless the query is already being filtered by this dataset_type
-        (either positively, or negatively), exclude datasets of type
-        `showcase`.
+        (either positively, or negatively) or it's enabled by user,
+        exclude datasets of type `showcase`.
         '''
         fq = search_params.get('fq', '')
         filter = 'dataset_type:{0}'.format(DATASET_TYPE_NAME)
         if filter not in fq:
-            search_params.update({'fq': fq + " -" + filter})
+            if not tk.asbool(config.get('ckanext.showcase.include_into_search', False)):
+                search_params.update({'fq': fq + " -" + filter})
         return search_params
 
     # ITranslation
