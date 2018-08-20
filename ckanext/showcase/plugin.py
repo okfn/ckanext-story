@@ -5,9 +5,8 @@ import logging
 import ckan.plugins as plugins
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.helpers as h
-from ckan.common import config
 from ckan.plugins import toolkit as tk
-from ckan.common import OrderedDict
+from ckan.common import OrderedDict, config
 from ckan import model as ckan_model
 
 from routes.mapper import SubMapper
