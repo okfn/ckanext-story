@@ -28,6 +28,23 @@
         {{ form.markdown('notes', id='field-notes', label=_('Description'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes) }}
       {% endblock %}
 
+      {% block package_basic_fields_related_stories %}
+        <div class="form-group control-full control-select">
+          <label class="control-label" for="field-related-stories">Related Stories</label>
+          <div class="controls ">
+            <select name="related_stories" id="field-related-stories" multiple="multiple" style="width: 100%">
+              {% for dataset in h.get_related_stories_for_form(selected_ids=data.get('related_stories', []), exclude_ids=[data.get('id')]) %}
+                <option value={{ dataset.value }} {% if dataset.selected %}selected{% endif %}>{{ dataset.text }}</option>
+              {% endfor %}
+            </select>
+            <div class="info-block ">
+              <i class="fa fa-info-circle"></i>
+              Mark as related one or more stories
+            </div>
+          </div>
+        </div>
+      {% endblock %}
+
       {% block package_basic_fields_tags %}
         {% set tag_attrs = {'data-module': 'autocomplete', 'data-module-tags': '', 'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'} %}
         {{ form.input('tag_string', id='field-tags', label=_('Tags'), placeholder=_('eg. economy, mental health, government'), value=data.tag_string, error=errors.tags, classes=['control-full'], attrs=tag_attrs) }}
@@ -54,10 +71,6 @@
       {% if h.is_disqus_enabled() %}
         {{ form.select('allow_commenting', label='Allow commenting', id='field-allow_commenting', options=[{'text':'Yes', 'value': True},{'text': 'No', 'value': False}], selected=data.allow_commenting, error=errors.allow_commenting) }}
       {% endif %}
-    {% endblock %}
-
-    {% block package_metadata_related_stories %}
-      {{ form.input('related_stories', label='Linked stories', id='field-linked-stories', placeholder='', value=data.related_stories, error=errors.related_stories, classes=['control-medium']) }}
     {% endblock %}
   {% endblock %}
 

@@ -1,6 +1,7 @@
 import re
 import logging
 import ckan.lib.helpers as h
+from ckan import model
 from ckan.common import config
 from ckan.plugins import toolkit as tk
 log = logging.getLogger(__name__)
@@ -56,39 +57,34 @@ def search_emdedded_elements(text):
     return elements
 
 
-def get_related_datasets_for_form(type='dataset', selected_ids=[], exclude_ids=[]):
+def get_related_stories_for_form(selected_ids=[], exclude_ids=[]):
     context = {'model': model}
 
     # Get search results
-    search_datasets = toolkit.get_action('package_search')
+    search_datasets = tk.get_action('package_search')
     search = search_datasets(context, {
-        'fq': 'dataset_type:%s' % type,
+        'fq': 'dataset_type:showcase',
         'include_private': False,
         'sort': 'organization asc, title asc',
     })
 
     # Get datasets
-    orgs = []
-    current_org = None
+    datasets = []
     selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
     for package in search['results']:
         dataset = {'text': package['title'], 'value': package['id']}
-
-        # Skip excluded
         if package['id'] in exclude_ids:
             continue
-
-        # Mark selected
         if package['id'] in selected_ids:
             dataset['selected'] = 'selected'
+        datasets.append(dataset)
 
-        # Handle hierarchy
-        if package['owner_org'] != current_org:
-            current_org = package['owner_org']
-            orgs.append({'text': package['organization']['title'], 'children': []})
-        orgs[-1]['children'].append(dataset)
+    return datasets
 
-    return orgs
+
+def get_related_datasets_for_form(selected_ids=[], exclude_ids=[]):
+    # TODO: see for hierarchy https://github.com/okfn/ckanext-unhcr/pull/42/files
+    pass
 
 
 def get_related_datasets_for_display(value):
@@ -98,8 +94,8 @@ def get_related_datasets_for_display(value):
     datasets = []
     ids = value if isinstance(value, list) else value.strip('{}').split(',')
     for id in ids:
-        dataset = toolkit.get_action('package_show')(context, {'id': id})
-        href = toolkit.url_for('dataset_read', id=dataset['name'], qualified=True)
+        dataset = tk.get_action('package_show')(context, {'id': id})
+        href = tk.url_for('dataset_read', id=dataset['name'], qualified=True)
         datasets.append({'text': dataset['title'], 'href': href})
 
     return datasets
