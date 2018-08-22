@@ -55,6 +55,9 @@ def showcase_base_schema():
     schema['original_related_item_id'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
+    schema['related_stories'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
 
     # Extras (conditional)
     if config.get('disqus.name'):
@@ -123,6 +126,9 @@ def showcase_show_schema():
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
     schema['original_related_item_id'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['related_stories'] = [
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
 

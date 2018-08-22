@@ -47,5 +47,19 @@ Example:
         <p class="module-content empty">{{_('There are no Datasets in this Showcase')}}</p>
       {% endif %}
     </section>
+
+    <section class="module module-narrow">
+      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Related Showcases') }}</h2>
+      {% set related_stories = h.get_related_stories_for_display(pkg.get('related_stories', [])) %}
+      {% if related_stories %}
+        <ul class="nav nav-simple">
+        {% for package in related_stories %}
+          <li class="nav-item">{{ h.link_to(h.truncate(package.text, 80), package.href) }}</li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <p class="module-content empty">{{_('There are no Related Showcases')}}</p>
+      {% endif %}
+    </section>
   {% endif %}
 {% endblock %}

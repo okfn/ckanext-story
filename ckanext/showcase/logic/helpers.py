@@ -1,6 +1,7 @@
 import re
 import logging
 import ckan.lib.helpers as h
+from ckan import model
 from ckan.common import config
 from ckan.plugins import toolkit as tk
 log = logging.getLogger(__name__)
@@ -54,3 +55,42 @@ def search_emdedded_elements(text):
         })
 
     return elements
+
+
+def get_related_stories_for_form(selected_ids=[], exclude_ids=[]):
+    context = {'model': model}
+
+    # Get search results
+    search_datasets = tk.get_action('package_search')
+    search = search_datasets(context, {
+        'fq': 'dataset_type:showcase',
+        'include_private': False,
+        'sort': 'organization asc, title asc',
+    })
+
+    # Get datasets
+    datasets = []
+    selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
+    for package in search['results']:
+        dataset = {'text': package['title'], 'value': package['id']}
+        if package['id'] in exclude_ids:
+            continue
+        if package['id'] in selected_ids:
+            dataset['selected'] = 'selected'
+        datasets.append(dataset)
+
+    return datasets
+
+
+def get_related_stories_for_display(value):
+    context = {'model': model}
+
+    # Get datasets
+    datasets = []
+    ids = value if isinstance(value, list) else value.strip('{}').split(',')
+    for id in ids:
+        dataset = tk.get_action('package_show')(context, {'id': id})
+        href = tk.url_for('showcase_read', id=dataset['name'], qualified=False)
+        datasets.append({'text': dataset['title'], 'href': href})
+
+    return datasets

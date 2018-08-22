@@ -7,4 +7,9 @@ $(document).ready(function() {
     document.querySelector('span.editor-info-block').style.display = 'none'
   }
 
+  // Related stories
+  $('#field-related-stories').select2({
+    placeholder: 'Click to get a drop-down list or start typing a story title'
+  })
+
 })
