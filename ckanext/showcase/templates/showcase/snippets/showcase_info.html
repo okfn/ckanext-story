@@ -50,7 +50,7 @@ Example:
 
     <section class="module module-narrow">
       <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Related Showcases') }}</h2>
-      {% set related_stories = h.get_related_datasets_for_display(pkg.get('related_stories', [])) %}
+      {% set related_stories = h.get_related_stories_for_display(pkg.get('related_stories', [])) %}
       {% if related_stories %}
         <ul class="nav nav-simple">
         {% for package in related_stories %}

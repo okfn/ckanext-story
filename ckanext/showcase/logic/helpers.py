@@ -82,12 +82,7 @@ def get_related_stories_for_form(selected_ids=[], exclude_ids=[]):
     return datasets
 
 
-def get_related_datasets_for_form(selected_ids=[], exclude_ids=[]):
-    # TODO: see for hierarchy https://github.com/okfn/ckanext-unhcr/pull/42/files
-    pass
-
-
-def get_related_datasets_for_display(value):
+def get_related_stories_for_display(value):
     context = {'model': model}
 
     # Get datasets
