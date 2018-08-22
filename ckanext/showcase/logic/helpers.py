@@ -54,3 +54,52 @@ def search_emdedded_elements(text):
         })
 
     return elements
+
+
+def get_related_datasets_for_form(type='dataset', selected_ids=[], exclude_ids=[]):
+    context = {'model': model}
+
+    # Get search results
+    search_datasets = toolkit.get_action('package_search')
+    search = search_datasets(context, {
+        'fq': 'dataset_type:%s' % type,
+        'include_private': False,
+        'sort': 'organization asc, title asc',
+    })
+
+    # Get datasets
+    orgs = []
+    current_org = None
+    selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
+    for package in search['results']:
+        dataset = {'text': package['title'], 'value': package['id']}
+
+        # Skip excluded
+        if package['id'] in exclude_ids:
+            continue
+
+        # Mark selected
+        if package['id'] in selected_ids:
+            dataset['selected'] = 'selected'
+
+        # Handle hierarchy
+        if package['owner_org'] != current_org:
+            current_org = package['owner_org']
+            orgs.append({'text': package['organization']['title'], 'children': []})
+        orgs[-1]['children'].append(dataset)
+
+    return orgs
+
+
+def get_related_datasets_for_display(value):
+    context = {'model': model}
+
+    # Get datasets
+    datasets = []
+    ids = value if isinstance(value, list) else value.strip('{}').split(',')
+    for id in ids:
+        dataset = toolkit.get_action('package_show')(context, {'id': id})
+        href = toolkit.url_for('dataset_read', id=dataset['name'], qualified=True)
+        datasets.append({'text': dataset['title'], 'href': href})
+
+    return datasets
