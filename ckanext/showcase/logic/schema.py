@@ -8,6 +8,7 @@ from ckan.lib.navl.validators import (not_empty,
                                       ignore,
                                       keep_extras)
 from ckan.logic.validators import (package_id_not_changed,
+                                   unicode_safe,
                                    name_validator,
                                    user_id_or_name_exists,
                                    package_name_validator,
@@ -46,6 +47,12 @@ def showcase_base_schema():
         'extras': default_extras_schema(),
         'save': [ignore],
         'return_to': [ignore],
+        'groups': {
+            'id': [ignore_missing, unicode_safe],
+            'name': [ignore_missing, unicode_safe],
+            'title': [ignore_missing, unicode_safe],
+            '__extras': [ignore],
+        }
     }
 
     # Extras
@@ -103,6 +110,12 @@ def showcase_show_schema():
     schema.update({
         'state': [ignore_missing],
         })
+
+    schema['groups'].update({
+        'description': [ignore_missing],
+        'display_name': [ignore_missing],
+        'image_display_url': [ignore_missing],
+    })
 
     # Remove validators for several keys from the schema so validation doesn't
     # strip the keys from the package dicts if the values are 'missing' (i.e.
