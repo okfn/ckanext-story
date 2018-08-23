@@ -55,7 +55,7 @@
   {% block metadata_fields %}
 
     {% block package_metadata_story_type %}
-      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'text':'Data Stories', 'value': 'data_stories'},{'text': 'Visualizations', 'value': 'visualizations'},{'text': 'Interviews / Profiles', 'value': 'interviews_profiles'},{'text': 'Methodologies', 'value': 'methodologies'},{'text': 'White papers / Research', 'value': 'white_papers_research'}], selected=data.story_type, error=errors.story_type) }}
+      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'White papers / Research'}], selected=data.story_type, error=errors.story_type) }}
     {% endblock %}
 
     {% block package_metadata_spatial_text %}
