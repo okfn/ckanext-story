@@ -84,6 +84,12 @@
     {% snippet "showcase/snippets/tags.html", tags=pkg.tags %}
   {% endblock %}
 
+  {% block package_story_type %}
+    {% if pkg.story_type %}
+      <blockquote>Story type: {{ pkg.story_type }}</blockquote>
+    {% endif %}
+  {% endblock %}
+
   {% block package_search_results_list %}
   {% endblock %}
 
