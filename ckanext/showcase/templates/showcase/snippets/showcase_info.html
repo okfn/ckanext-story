@@ -29,6 +29,10 @@ Example:
                 <span class="smallest">{{_('Submitter title')}}</span>
                 <p>{{ pkg.author_title }}</p>
             {% endif %}
+            {% if pkg.author_workplace %}
+                <span class="smallest">{{_('Submitter workplace')}}</span>
+                <p>{{ pkg.author_workplace }}</p>
+            {% endif %}
             {% if pkg.url %}
               <div class="info">
                 <a class="btn btn-primary" href="{{ pkg.url }}" target="_blank">
