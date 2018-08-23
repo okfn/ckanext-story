@@ -15,7 +15,7 @@ Example:
         <div class="module-content">
           {% block package_info_inner %}
             {% block heading %}
-              <h1 class="heading">{{ pkg.title or pkg.name }}</h1>
+              <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Metadata') }}</h2>
             {% endblock %}
             {% if pkg.author %}
                 <span class="smallest">{{_('Submitter')}}</span>
