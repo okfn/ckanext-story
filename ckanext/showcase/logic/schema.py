@@ -61,6 +61,9 @@ def showcase_base_schema():
     schema['story_type'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
+    schema['spatial_text'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
     schema['author_title'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
@@ -141,6 +144,9 @@ def showcase_show_schema():
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
     schema['story_type'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['spatial_text'] = [
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
     schema['author_title'] = [

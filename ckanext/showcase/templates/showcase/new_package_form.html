@@ -54,6 +54,10 @@
         {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'text':'Data Stories', 'value': 'data_stories'},{'text': 'Visualizations', 'value': 'visualizations'},{'text': 'Interviews / Profiles', 'value': 'interviews_profiles'},{'text': 'Methodologies', 'value': 'methodologies'},{'text': 'White papers / Research', 'value': 'white_papers_research'}], selected=data.story_type, error=errors.story_type) }}
       {% endblock %}
 
+      {% block package_basic_fields_spatial_text %}
+        {{ form.input('spatial_text', label=_('Location'), id='field-author-workplace', placeholder=_('City'), value=data.spatial_text, error=errors.spatial_text, classes=['control-medium']) }}
+      {% endblock %}
+
   {% endblock %}
 
   {% block metadata_fields %}
