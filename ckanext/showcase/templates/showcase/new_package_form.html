@@ -30,7 +30,7 @@
 
       {% block package_basic_fields_related_stories %}
         <div class="form-group control-full control-select">
-          <label class="control-label" for="field-related-stories">Related Stories</label>
+          <label class="control-label" for="field-related-stories">Related stories</label>
           <div class="controls ">
             <select name="related_stories" id="field-related-stories" multiple="multiple" style="width: 100%">
               {% for dataset in h.get_related_stories_for_form(selected_ids=data.get('related_stories', []), exclude_ids=[data.get('id')]) %}
@@ -56,7 +56,8 @@
 
     {% block package_metadata_author %}
       {{ form.input('author', label=_('Submitter'), id='field-author', placeholder=_('Joe Bloggs'), value=data.author, error=errors.author, classes=['control-medium']) }}
-      {{ form.input('author_email', label=_('Submitter Email'), id='field-author-email', placeholder=_('joe@example.com'), value=data.author_email, error=errors.author_email, classes=['control-medium']) }}
+      {{ form.input('author_email', label=_('Submitter email'), id='field-author-email', placeholder=_('joe@example.com'), value=data.author_email, error=errors.author_email, classes=['control-medium']) }}
+      {{ form.input('author_title', label=_('Submitter title'), id='field-author-title', placeholder=_('Title'), value=data.author_title, error=errors.author_title, classes=['control-medium']) }}
     {% endblock %}
 
     {% block package_metadata_allow_commenting %}
