@@ -34,12 +34,29 @@
           <div class="controls ">
             <select name="related_stories" id="field-related-stories" multiple="multiple" style="width: 100%">
               {% for dataset in h.get_related_stories_for_form(selected_ids=data.get('related_stories', []), exclude_ids=[data.get('id')]) %}
-                <option value={{ dataset.value }} {% if dataset.selected %}selected{% endif %}>{{ dataset.text }}</option>
+                <option value="{{ dataset.value }}" {% if dataset.selected %}selected{% endif %}>{{ dataset.text }}</option>
               {% endfor %}
             </select>
             <div class="info-block ">
               <i class="fa fa-info-circle"></i>
               Mark as related one or more stories
+            </div>
+          </div>
+        </div>
+      {% endblock %}
+
+      {% block package_basic_fields_groups %}
+        <div class="form-group control-full control-select">
+          <label class="control-label" for="field-groups">Topics</label>
+          <div class="controls ">
+            <select name="groups" id="field-groups" multiple="multiple" style="width: 100%">
+              {% for group in h.get_groups_for_form(selected_groups=data.get('groups', [])) %}
+                <option value="{{ group.name }}" {% if group.selected %}selected{% endif %}>{{ group.display_name }}</option>
+              {% endfor %}
+            </select>
+            <div class="info-block ">
+              <i class="fa fa-info-circle"></i>
+              Add one or more topics
             </div>
           </div>
         </div>

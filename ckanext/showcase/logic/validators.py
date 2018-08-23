@@ -42,3 +42,13 @@ def convert_package_name_or_id_to_id_for_type_showcase(package_name_or_id,
     return convert_package_name_or_id_to_id_for_type(package_name_or_id,
                                                      context,
                                                      package_type='showcase')
+
+
+def convert_group_names_to_group_objects(value):
+    groups = []
+    if isinstance(value, list):
+        return value
+    names = (value.strip('{}') or '').split(',')
+    for name in names:
+        groups.append({'name': name})
+    return groups

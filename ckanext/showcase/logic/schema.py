@@ -3,17 +3,18 @@ import ckan.plugins.toolkit as toolkit
 from ckan.common import config
 from ckan.lib.navl.validators import (not_empty,
                                       empty,
+                                      unicode_safe,
                                       if_empty_same_as,
                                       ignore_missing,
                                       ignore,
                                       keep_extras)
 from ckan.logic.validators import (package_id_not_changed,
-                                   unicode_safe,
                                    name_validator,
                                    user_id_or_name_exists,
                                    package_name_validator,
                                    tag_string_convert,
                                    ignore_not_package_admin,
+                                   no_loops_in_hierarchy,
                                    no_http)
 from ckan.logic.schema import (default_tags_schema,
                                default_extras_schema,
@@ -21,7 +22,8 @@ from ckan.logic.schema import (default_tags_schema,
 
 from ckanext.showcase.logic.validators import (
     convert_package_name_or_id_to_id_for_type_dataset,
-    convert_package_name_or_id_to_id_for_type_showcase)
+    convert_package_name_or_id_to_id_for_type_showcase,
+    convert_group_names_to_group_objects)
 
 log = logging.getLogger(__name__)
 
@@ -47,12 +49,7 @@ def showcase_base_schema():
         'extras': default_extras_schema(),
         'save': [ignore],
         'return_to': [ignore],
-        'groups': {
-            'id': [ignore_missing, unicode_safe],
-            'name': [ignore_missing, unicode_safe],
-            'title': [ignore_missing, unicode_safe],
-            '__extras': [ignore],
-        }
+        'groups': [ignore_missing, convert_group_names_to_group_objects],
     }
 
     # Extras
@@ -111,11 +108,14 @@ def showcase_show_schema():
         'state': [ignore_missing],
         })
 
-    schema['groups'].update({
+    schema['groups'] = {
+        'name': [not_empty, no_loops_in_hierarchy, unicode_safe],
+        'capacity': [ignore_missing],
+        '__extras': [ignore],
         'description': [ignore_missing],
         'display_name': [ignore_missing],
         'image_display_url': [ignore_missing],
-    })
+    }
 
     # Remove validators for several keys from the schema so validation doesn't
     # strip the keys from the package dicts if the values are 'missing' (i.e.
