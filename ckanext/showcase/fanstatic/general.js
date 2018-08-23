@@ -12,4 +12,9 @@ $(document).ready(function() {
     placeholder: 'Click to get a drop-down list or start typing a story title'
   })
 
+  // Groups
+  $('#field-groups').select2({
+    placeholder: 'Click to get a drop-down list or start typing a group title'
+  })
+
 })
