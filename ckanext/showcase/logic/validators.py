@@ -1,7 +1,11 @@
+import logging
+
 from ckan.plugins import toolkit as tk
 
 _ = tk._
 Invalid = tk.Invalid
+
+log = logging.getLogger(__name__)
 
 
 def convert_package_name_or_id_to_id_for_type(package_name_or_id,
@@ -46,9 +50,7 @@ def convert_package_name_or_id_to_id_for_type_showcase(package_name_or_id,
 
 def convert_group_names_to_group_objects(value):
     groups = []
-    if isinstance(value, list):
-        return value
-    names = (value.strip('{}') or '').split(',')
-    for name in names:
-        groups.append({'name': name})
+    items = value if isinstance(value, list) else (value or '').strip('{}').split(',')
+    for item in items:
+        groups.append(item if isinstance(item, dict) else {'name': item})
     return groups
