@@ -17,6 +17,14 @@ Example:
             {% block heading %}
               <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Metadata') }}</h2>
             {% endblock %}
+            {% if pkg.story_type %}
+                <span class="smallest">{{_('Type')}}</span>
+                <p>{{ pkg.story_type }}</p>
+            {% endif %}
+            {% if pkg.spatial_text %}
+                <span class="smallest">{{_('Location')}}</span>
+                <p>{{ pkg.spatial_text }}</p>
+            {% endif %}
             {% if pkg.author %}
                 <span class="smallest">{{_('Submitter')}}</span>
                 <p>{{ pkg.author }}</p>
