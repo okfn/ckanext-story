@@ -58,6 +58,18 @@ def showcase_base_schema():
     schema['related_stories'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
+    schema['story_type'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
+    schema['spatial_text'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
+    schema['author_title'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
+    schema['author_workplace'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
 
     # Extras (conditional)
     if config.get('disqus.name'):
@@ -129,6 +141,18 @@ def showcase_show_schema():
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
     schema['related_stories'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['story_type'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['spatial_text'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['author_title'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['author_workplace'] = [
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
 

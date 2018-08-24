@@ -15,11 +15,31 @@ Example:
         <div class="module-content">
           {% block package_info_inner %}
             {% block heading %}
-              <h1 class="heading">{{ pkg.title or pkg.name }}</h1>
+              <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Metadata') }}</h2>
             {% endblock %}
+            {% if pkg.story_type %}
+                <span class="smallest">{{_('Type')}}</span>
+                <p>{{ pkg.story_type }}</p>
+            {% endif %}
+            {% if pkg.spatial_text %}
+                <span class="smallest">{{_('Location')}}</span>
+                <p>{{ pkg.spatial_text }}</p>
+            {% endif %}
             {% if pkg.author %}
-                <span class="smallest">{{_('Submitted by')}}</span>
+                <span class="smallest">{{_('Submitter')}}</span>
                 <p>{{ pkg.author }}</p>
+            {% endif %}
+            {% if pkg.author_email %}
+                <span class="smallest">{{_('Submitter email')}}</span>
+                <p>{{ pkg.author_email }}</p>
+            {% endif %}
+            {% if pkg.author_title %}
+                <span class="smallest">{{_('Submitter title')}}</span>
+                <p>{{ pkg.author_title }}</p>
+            {% endif %}
+            {% if pkg.author_workplace %}
+                <span class="smallest">{{_('Submitter workplace')}}</span>
+                <p>{{ pkg.author_workplace }}</p>
             {% endif %}
             {% if pkg.url %}
               <div class="info">

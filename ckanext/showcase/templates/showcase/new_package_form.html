@@ -25,12 +25,12 @@
       {% endblock %}
 
       {% block package_basic_fields_description %}
-        {{ form.markdown('notes', id='field-notes', label=_('Description'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes) }}
+        {{ form.markdown('notes', id='field-notes', label=_('Content'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes) }}
       {% endblock %}
 
       {% block package_basic_fields_related_stories %}
         <div class="form-group control-full control-select">
-          <label class="control-label" for="field-related-stories">Related Stories</label>
+          <label class="control-label" for="field-related-stories">Related stories</label>
           <div class="controls ">
             <select name="related_stories" id="field-related-stories" multiple="multiple" style="width: 100%">
               {% for dataset in h.get_related_stories_for_form(selected_ids=data.get('related_stories', []), exclude_ids=[data.get('id')]) %}
@@ -50,21 +50,23 @@
         {{ form.input('tag_string', id='field-tags', label=_('Tags'), placeholder=_('eg. economy, mental health, government'), value=data.tag_string, error=errors.tags, classes=['control-full'], attrs=tag_attrs) }}
       {% endblock %}
 
-      {% set is_upload = data.image_url and not data.image_url.startswith('http') %}
-      {% set is_url = data.image_url and data.image_url.startswith('http') %}
-
-      {{ form.image_upload(data, errors, is_upload_enabled=h.uploads_enabled(), is_url=is_url, is_upload=is_upload) }}
-
   {% endblock %}
 
   {% block metadata_fields %}
-    {% block package_metadata_fields_url %}
-      {{ form.input('url', label=_('External link'), id='field-url', placeholder=_('http://www.example.com'), value=data.url, error=errors.url, classes=['control-medium']) }}
+
+    {% block package_metadata_story_type %}
+      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'White papers / Research'}], selected=data.story_type, error=errors.story_type) }}
+    {% endblock %}
+
+    {% block package_metadata_spatial_text %}
+      {{ form.input('spatial_text', label=_('Location'), id='field-author-workplace', placeholder=_('City'), value=data.spatial_text, error=errors.spatial_text, classes=['control-medium']) }}
     {% endblock %}
 
     {% block package_metadata_author %}
-      {{ form.input('author', label=_('Submitted By'), id='field-author', placeholder=_('Joe Bloggs'), value=data.author, error=errors.author, classes=['control-medium']) }}
-      {{ form.input('author_email', label=_('Submitter Email'), id='field-author-email', placeholder=_('joe@example.com'), value=data.author_email, error=errors.author_email, classes=['control-medium']) }}
+      {{ form.input('author', label=_('Submitter'), id='field-author', placeholder=_('Joe Bloggs'), value=data.author, error=errors.author, classes=['control-medium']) }}
+      {{ form.input('author_email', label=_('Submitter email'), id='field-author-email', placeholder=_('joe@example.com'), value=data.author_email, error=errors.author_email, classes=['control-medium']) }}
+      {{ form.input('author_title', label=_('Submitter title'), id='field-author-title', placeholder=_('Title'), value=data.author_title, error=errors.author_title, classes=['control-medium']) }}
+      {{ form.input('author_workplace', label=_('Submitter workplace'), id='field-author-workplace', placeholder=_('Title'), value=data.author_workplace, error=errors.author_workplace, classes=['control-medium']) }}
     {% endblock %}
 
     {% block package_metadata_allow_commenting %}
@@ -72,6 +74,7 @@
         {{ form.select('allow_commenting', label='Allow commenting', id='field-allow_commenting', options=[{'text':'Yes', 'value': True},{'text': 'No', 'value': False}], selected=data.allow_commenting, error=errors.allow_commenting) }}
       {% endif %}
     {% endblock %}
+
   {% endblock %}
 
   {% block form_actions %}
