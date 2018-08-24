@@ -14,7 +14,7 @@ $(document).ready(function() {
 
   // Groups
   $('#field-groups').select2({
-    placeholder: 'Click to get a drop-down list or start typing a group title'
+    placeholder: 'Click to get a drop-down list or start typing a topic title'
   })
 
 })
