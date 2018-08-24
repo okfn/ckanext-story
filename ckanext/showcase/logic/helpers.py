@@ -57,6 +57,25 @@ def search_emdedded_elements(text):
     return elements
 
 
+def get_groups_for_form(selected_groups=[]):
+    context = {'model': model}
+
+    # Get group names
+    names = tk.get_action('group_list')(context, {'sort': 'title asc'})
+
+    # Get groups
+    groups = []
+    selected_names = map(lambda group: group['name'], selected_groups)
+    for name in names:
+        # We use one query per group because there is no the `group_search` action
+        group = tk.get_action('group_show')(context, {'id': name})
+        if group['name'] in selected_names:
+            group['selected'] = 'selected'
+        groups.append(group)
+
+    return groups
+
+
 def get_related_stories_for_form(selected_ids=[], exclude_ids=[]):
     context = {'model': model}
 

@@ -81,5 +81,20 @@ Example:
         <p class="module-content empty">{{_('There are no Related Showcases')}}</p>
       {% endif %}
     </section>
+
+    <section class="module module-narrow">
+      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Topics') }}</h2>
+      {% if pkg.groups %}
+        <ul class="nav nav-simple">
+        {% for group in pkg.groups %}
+          {% set truncate_title = truncate_title or 80 %}
+          {% set title = group.display_name or package.name %}
+          <li class="nav-item">{{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='group', action='read', id=group.name)) }}</li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <p class="module-content empty">{{_('There are no Associated Topics')}}</p>
+      {% endif %}
+    </section>
   {% endif %}
 {% endblock %}
