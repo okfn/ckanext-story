@@ -60,18 +60,18 @@ def search_emdedded_elements(text):
 def get_groups_for_form(selected_groups=[]):
     context = {'model': model}
 
-    # Get group names
-    names = tk.get_action('group_list')(context, {'sort': 'title asc'})
-
     # Get groups
-    groups = []
+    groups = tk.get_action('group_list')(context, {
+        'sort': 'title asc',
+        'type': config.get('ckanext.showcase.group_type', 'group'),
+        'all_fields': True,
+    })
+
+    # Mark selected
     selected_names = map(lambda group: group['name'], selected_groups)
-    for name in names:
-        # We use one query per group because there is no the `group_search` action
-        group = tk.get_action('group_show')(context, {'id': name})
+    for group in groups:
         if group['name'] in selected_names:
             group['selected'] = 'selected'
-        groups.append(group)
 
     return groups
 

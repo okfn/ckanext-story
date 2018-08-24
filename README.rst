@@ -82,6 +82,7 @@ do::
 Configuration
 ---
 
+- `ckanext.showcase.group_type (str)` - set if group type is customized (default: 'group')
 - `ckanext.showcase.include_into_search (bool)` - include showcases to datasets search
 - `disqus.name (str)` - if this setting is availabe the commenting integration will be enabled (it requires the `ckanext-disqus` plugin)
 
