@@ -25,7 +25,7 @@ _ = tk._
 
 log = logging.getLogger(__name__)
 
-DATASET_TYPE_NAME = 'showcase'
+DATASET_TYPE_NAME = 'story'
 
 
 class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
