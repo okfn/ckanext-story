@@ -204,7 +204,7 @@ class ShowcaseController(PackageController):
             c.pkg_dict = get_action('package_show')(context, data_dict)
             c.showcase_list = get_action('package_search')(context, {
                 'q': 'dataset_names:%s' % c.pkg_dict['name'],
-                'fq': 'dataset_type:showcase',
+                'fq': 'dataset_type:%s' % DATASET_TYPE_NAME,
             })['results']
         except NotFound:
             abort(404, _('Dataset not found'))

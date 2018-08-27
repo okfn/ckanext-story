@@ -23,12 +23,12 @@ def get_site_statistics():
     Custom stats helper, so we can get the correct number of packages, and a
     count of showcases.
     '''
-
+    from ckanext.showcase.plugin import DATASET_TYPE_NAME
     stats = {}
     stats['showcase_count'] = tk.get_action('package_search')(
-        {}, {"rows": 1, 'fq': 'dataset_type:showcase'})['count']
+        {}, {"rows": 1, 'fq': 'dataset_type:%s' % DATASET_TYPE_NAME})['count']
     stats['dataset_count'] = tk.get_action('package_search')(
-        {}, {"rows": 1, 'fq': '!dataset_type:showcase'})['count']
+        {}, {"rows": 1, 'fq': '!dataset_type:%s' % DATASET_TYPE_NAME})['count']
     stats['group_count'] = len(tk.get_action('group_list')({}, {}))
     stats['organization_count'] = len(
         tk.get_action('organization_list')({}, {}))
@@ -77,12 +77,13 @@ def get_groups_for_form(selected_groups=[]):
 
 
 def get_related_stories_for_form(selected_ids=[], exclude_ids=[]):
+    from ckanext.showcase.plugin import DATASET_TYPE_NAME
     context = {'model': model}
 
     # Get search results
     search_datasets = tk.get_action('package_search')
     search = search_datasets(context, {
-        'fq': 'dataset_type:showcase',
+        'fq': 'dataset_type:%s' % DATASET_TYPE_NAME,
         'include_private': False,
         'sort': 'organization asc, title asc',
     })
