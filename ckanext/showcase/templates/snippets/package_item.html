@@ -1,0 +1,5 @@
+{% ckan_extends %}
+
+{% block heading_title %}
+  {{ h.link_to(h.truncate(title, truncate_title), h.url_for('%s_read' % package.type if package.type != 'showcase' else 'ckanext_showcase_read', id=package.name)) }}
+{% endblock %}
