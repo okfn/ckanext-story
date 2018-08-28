@@ -2,6 +2,7 @@ from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.lib.munge import munge_title_to_name, substitute_ascii_equivalents
 from ckan.logic import get_action
+from ckanext.showcase.plugin import DATASET_TYPE_NAME
 
 
 import logging
@@ -78,7 +79,8 @@ migration can continue. Please correct and try again:"""
 
         for related in related_items:
             existing_showcase = get_action('package_search')(
-                data_dict={'fq': '+dataset_type:showcase original_related_item_id:{0}'.format(related['id'])})
+                data_dict={'fq': '+dataset_type:{0} original_related_item_id:{1}'.format(
+                    DATASET_TYPE_NAME, related['id'])})
             normalized_title = substitute_ascii_equivalents(related['title'])
             if existing_showcase['count'] > 0:
                 print('Showcase for Related Item "{0}" already exists.'.format(

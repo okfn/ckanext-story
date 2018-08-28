@@ -25,7 +25,7 @@ _ = tk._
 
 log = logging.getLogger(__name__)
 
-DATASET_TYPE_NAME = 'showcase'
+DATASET_TYPE_NAME = 'story'
 
 
 class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
@@ -204,7 +204,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
         Add key/values to pkg_dict and return it.
         '''
 
-        if pkg_dict['type'] != 'showcase':
+        if pkg_dict['type'] != DATASET_TYPE_NAME:
             return pkg_dict
 
         # Add a display url for the Showcase image to the pkg dict so template
@@ -267,7 +267,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
 
     def before_index(self, pkg_dict):
         # Remove showcase non-indexable fields
-        if pkg_dict['type'] == 'showcase':
+        if pkg_dict['type'] == DATASET_TYPE_NAME:
             pkg_dict.pop('showcase_notes_formatted', None)
             pkg_dict.pop('embedded_elements', None)
             pkg_dict.pop('embedded_datasets', None)
