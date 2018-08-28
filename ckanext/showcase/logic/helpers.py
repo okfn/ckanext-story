@@ -109,7 +109,7 @@ def get_related_stories_for_display(value):
     ids = value if isinstance(value, list) else value.strip('{}').split(',')
     for id in ids:
         dataset = tk.get_action('package_show')(context, {'id': id})
-        href = tk.url_for('showcase_read', id=dataset['name'], qualified=False)
+        href = tk.url_for('ckanext_showcase_read', id=dataset['name'], qualified=False)
         datasets.append({'text': dataset['title'], 'href': href})
 
     return datasets

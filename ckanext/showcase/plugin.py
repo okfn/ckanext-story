@@ -25,6 +25,10 @@ _ = tk._
 
 log = logging.getLogger(__name__)
 
+# Affects routing
+MAPPER_URL_NAME = 'story'
+MAPPER_URL_NAME_PLURAL = 'stories'
+# Don't change below it doesn't work
 DATASET_TYPE_NAME = 'showcase'
 
 
@@ -143,27 +147,26 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
         # the names below based on the dataset.type ('dataset' is the default
         # type)
         with SubMapper(map, controller='ckanext.showcase.controller:ShowcaseController') as m:
-            m.connect('ckanext_showcase_index', '/showcase', action='search',
-                      highlight_actions='index search')
-            m.connect('ckanext_showcase_new', '/showcase/new', action='new')
-            m.connect('ckanext_showcase_delete', '/showcase/delete/{id}',
-                      action='delete')
-            m.connect('ckanext_showcase_read', '/showcase/{id}', action='read',
-                      ckan_icon='picture')
-            m.connect('ckanext_showcase_edit', '/showcase/edit/{id}',
-                      action='edit', ckan_icon='edit')
+            m.connect('ckanext_showcase_index',
+                '/%s' % MAPPER_URL_NAME, action='search', highlight_actions='index search')
+            m.connect('ckanext_showcase_new',
+                '/%s/new' % MAPPER_URL_NAME, action='new')
+            m.connect('ckanext_showcase_delete',
+                '/%s/delete/{id}' % MAPPER_URL_NAME, action='delete')
+            m.connect('ckanext_showcase_read',
+                '/%s/{id}' % MAPPER_URL_NAME, action='read', ckan_icon='picture')
+            m.connect('ckanext_showcase_edit',
+                '/%s/edit/{id}' % MAPPER_URL_NAME, action='edit', ckan_icon='edit')
             m.connect('ckanext_showcase_manage_datasets',
-                      '/showcase/manage_datasets/{id}',
-                      action="manage_datasets", ckan_icon="sitemap")
-            m.connect('dataset_showcase_list', '/dataset/showcases/{id}',
-                      action='dataset_showcase_list', ckan_icon='picture')
-            m.connect('ckanext_showcase_admins', '/ckan-admin/showcase_admins',
-                      action='manage_showcase_admins', ckan_icon='picture'),
+                '/%s/manage_datasets/{id}' % MAPPER_URL_NAME, action="manage_datasets", ckan_icon="sitemap")
+            m.connect('dataset_showcase_list',
+                '/dataset/%s/{id}' % MAPPER_URL_NAME_PLURAL, action='dataset_showcase_list', ckan_icon='picture')
+            m.connect('ckanext_showcase_admins',
+                '/ckan-admin/%s_admins' % MAPPER_URL_NAME, action='manage_showcase_admins', ckan_icon='picture'),
             m.connect('ckanext_showcase_admin_remove',
-                      '/ckan-admin/showcase_admin_remove',
-                      action='remove_showcase_admin')
-        map.redirect('/showcases', '/showcase')
-        map.redirect('/showcases/{url:.*}', '/showcase/{url}')
+                '/ckan-admin/%s_admin_remove' % MAPPER_URL_NAME, action='remove_showcase_admin')
+        map.redirect('/%s' % MAPPER_URL_NAME_PLURAL, '/%s' % MAPPER_URL_NAME)
+        map.redirect('/%s/{url:.*}' % MAPPER_URL_NAME_PLURAL, '/%s/{url}' % MAPPER_URL_NAME)
         return map
 
     # IActions
