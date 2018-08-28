@@ -9,7 +9,7 @@
   :target: https://coveralls.io/r/ckan/ckanext-showcase
 
 ================
-ckanext-story
+ckanext-showcase
 ================
 
 Showcase and link to datasets in use. Datasets used in an app, website or
