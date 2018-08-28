@@ -25,9 +25,11 @@ _ = tk._
 
 log = logging.getLogger(__name__)
 
-DATASET_TYPE_NAME = 'showcase'
+# Affects routing
 MAPPER_URL_NAME = 'story'
 MAPPER_URL_NAME_PLURAL = 'stories'
+# Don't change below it doesn't work
+DATASET_TYPE_NAME = 'showcase'
 
 
 class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
