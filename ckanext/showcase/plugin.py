@@ -245,7 +245,9 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
                         'title': dataset['title'],
                     })
                 except tk.ObjectNotFound:
-                    pass
+                    # https://github.com/ckan/ckanext-harvest/issues/84
+                    # Get rid of auth audit on the context otherwise we'll get an exception
+                    context.pop('__auth_audit', None)
 
         # Add dataset names (for searching)
         pkg_dict['dataset_names'] = ' '.join(dataset_names)
