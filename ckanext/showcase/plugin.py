@@ -238,11 +238,14 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
                 if element['dataset'] in dataset_names:
                     continue
                 dataset_names.add(element['dataset'])
-                dataset = tk.get_action('package_show')(context, {'id': element['dataset']})
-                pkg_dict['embedded_datasets'].append({
-                    'name': dataset['name'],
-                    'title': dataset['title'],
-                })
+                try:
+                    dataset = tk.get_action('package_show')(context, {'id': element['dataset']})
+                    pkg_dict['embedded_datasets'].append({
+                        'name': dataset['name'],
+                        'title': dataset['title'],
+                    })
+                except tk.ObjectNotFound:
+                    pass
 
         # Add dataset names (for searching)
         pkg_dict['dataset_names'] = ' '.join(dataset_names)
