@@ -45,3 +45,17 @@ td.ckanext_showcase_pagination_footer {
 .module-narrow .nav-item > a {
     word-break: break-word;
 }
+
+/* Markdown editor */
+
+.editor-toolbar.fullscreen {
+  z-index: 1000;
+}
+
+.CodeMirror-fullscreen {
+  z-index: 1000;
+}
+
+.editor-preview-side {
+  z-index: 1000;
+}
