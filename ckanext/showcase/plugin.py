@@ -239,15 +239,15 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
                     continue
                 dataset_names.add(element['dataset'])
                 try:
-                    dataset = tk.get_action('package_show')(context, {'id': element['dataset']})
+                    # https://github.com/ckan/ckanext-harvest/issues/84
+                    dataset = tk.get_action('package_show')(
+                        {'model': ckan_model}, {'id': element['dataset']})
                     pkg_dict['embedded_datasets'].append({
                         'name': dataset['name'],
                         'title': dataset['title'],
                     })
                 except tk.ObjectNotFound:
-                    # https://github.com/ckan/ckanext-harvest/issues/84
-                    # Get rid of auth audit on the context otherwise we'll get an exception
-                    context.pop('__auth_audit', None)
+                    pass
 
         # Add dataset names (for searching)
         pkg_dict['dataset_names'] = ' '.join(dataset_names)
