@@ -62,13 +62,14 @@
       {% endblock %}
     </h1>
 
-    {% if pkg.image_display_url %}
-      <p class="ckanext-showcase-image-container"><img src="{{ pkg.image_display_url }}" alt="{{ name }}" class="media-image ckanext-showcase-image"></p>
-    {% endif %}
-
     {% block package_notes %}
       {% if pkg.showcase_notes_formatted %}
         <div class="notes embedded-content ckanext-showcase-notes">
+          {% if pkg.image_display_url %}
+            <p style="float: left; margin-right: 2em;" class="ckanext-showcase-image-container">
+              <img width="160" height="160" src="{{ pkg.image_display_url }}" alt="{{ name }}" class="media-image ckanext-showcase-image">
+            </p>
+          {% endif %}
           {{ pkg.showcase_notes_formatted }}
         </div>
       {% endif %}
