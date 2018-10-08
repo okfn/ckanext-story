@@ -52,6 +52,9 @@ def showcase_base_schema():
         'groups': [ignore_missing, convert_group_names_to_group_objects],
     }
 
+    # Image
+    # TODO: implement
+
     # Extras
     schema['image_url'] = [
         toolkit.get_validator('ignore_missing'),
