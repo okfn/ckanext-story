@@ -55,9 +55,9 @@ Example:
 
     <section class="module module-narrow">
       <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Datasets in Showcase') }}</h2>
-      {% if pkg.embedded_datasets %}
+      {% if pkg.referenced_datasets %}
         <ul class="nav nav-simple">
-        {% for package in pkg.embedded_datasets %}
+        {% for package in pkg.referenced_datasets %}
           {% set truncate_title = truncate_title or 80 %}
           {% set title = package.title or package.name %}
           <li class="nav-item">{{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}</li>

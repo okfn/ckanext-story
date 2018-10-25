@@ -7,6 +7,11 @@ $(document).ready(function() {
     document.querySelector('span.editor-info-block').style.display = 'none'
   }
 
+  // Related datasets
+  $('#field-related-datasets').select2({
+    placeholder: 'Click to get a drop-down list or start typing a dataset title'
+  })
+
   // Related stories
   $('#field-related-stories').select2({
     placeholder: 'Click to get a drop-down list or start typing a story title'
