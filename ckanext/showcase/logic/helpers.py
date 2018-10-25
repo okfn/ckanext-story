@@ -137,9 +137,12 @@ def get_related_datasets_for_display(value):
     datasets = []
     ids = value if isinstance(value, list) else value.strip('{}').split(',')
     for id in ids:
-        dataset = toolkit.get_action('package_show')(context, {'id': id})
-        href = toolkit.url_for('dataset_read', id=dataset['name'], qualified=False)
-        datasets.append({'text': dataset['title'], 'href': href})
+        try:
+            dataset = toolkit.get_action('package_show')(context, {'id': id})
+            href = toolkit.url_for('dataset_read', id=dataset['name'], qualified=False)
+            datasets.append({'text': dataset['title'], 'href': href})
+        except tk.ObjectNotFound:
+            pass
 
     return datasets
 
@@ -151,8 +154,11 @@ def get_related_stories_for_display(value):
     datasets = []
     ids = value if isinstance(value, list) else value.strip('{}').split(',')
     for id in ids:
-        dataset = tk.get_action('package_show')(context, {'id': id})
-        href = tk.url_for('ckanext_showcase_read', id=dataset['name'], qualified=False)
-        datasets.append({'text': dataset['title'], 'href': href})
+        try:
+            dataset = tk.get_action('package_show')(context, {'id': id})
+            href = tk.url_for('ckanext_showcase_read', id=dataset['name'], qualified=False)
+            datasets.append({'text': dataset['title'], 'href': href})
+        except tk.ObjectNotFound:
+            pass
 
     return datasets
