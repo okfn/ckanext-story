@@ -104,7 +104,9 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             'is_disqus_enabled': showcase_helpers.is_disqus_enabled,
             'get_groups_for_form': showcase_helpers.get_groups_for_form,
             'get_related_stories_for_form': showcase_helpers.get_related_stories_for_form,
+            'get_related_datasets_for_form': showcase_helpers.get_related_datasets_for_form,
             'get_related_stories_for_display': showcase_helpers.get_related_stories_for_display,
+            'get_related_datasets_for_display': showcase_helpers.get_related_datasets_for_display,
         }
 
     # IFacets
