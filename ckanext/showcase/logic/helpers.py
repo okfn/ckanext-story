@@ -162,3 +162,13 @@ def get_related_stories_for_display(value):
             pass
 
     return datasets
+
+
+def get_methodologies_for_form():
+    stories = tk.get_action('package_search')({'model': model}, {
+        'q': 'story_type:Methodologies',
+        'fq': 'dataset_type:showcase',
+        'include_private': False,
+        'sort': 'organization asc, title asc',
+    })['results']
+    return [{'value': ''}] + [{'text': story['title'], 'value': story['id']} for story in stories]

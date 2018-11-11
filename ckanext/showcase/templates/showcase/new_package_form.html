@@ -102,6 +102,10 @@
       {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'White papers / Research'},{'value': 'Blog post'}], selected=data.story_type, error=errors.story_type) }}
     {% endblock %}
 
+    {% block package_metadata_methodology %}
+      {{ form.select('methodology', label='Methodology', id='field-methodology', options=h.get_methodologies_for_form(), selected=data.methodology, error=errors.methodology) }}
+    {% endblock %}
+
     {% block package_metadata_spatial_text %}
       {{ form.input('spatial_text', label=_('Location'), id='field-author-workplace', placeholder=_('City'), value=data.spatial_text, error=errors.spatial_text, classes=['control-medium']) }}
     {% endblock %}

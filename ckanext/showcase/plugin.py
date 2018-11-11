@@ -107,6 +107,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             'get_related_datasets_for_form': showcase_helpers.get_related_datasets_for_form,
             'get_related_stories_for_display': showcase_helpers.get_related_stories_for_display,
             'get_related_datasets_for_display': showcase_helpers.get_related_datasets_for_display,
+            'get_methodologies_for_form': showcase_helpers.get_methodologies_for_form,
         }
 
     # IFacets
@@ -270,6 +271,12 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
 
         # Add dataset count
         pkg_dict['num_datasets'] = len(pkg_dict['referenced_datasets'])
+
+        # Load methodology
+        methodology = pkg_dict.get('methodology')
+        if methodology and not isinstance(methodology, dict):
+            pkg_dict['methodology'] = tk.get_action('ckanext_showcase_show')(
+                {'model': ckan_model}, {'id': methodology})
 
         return pkg_dict
 
