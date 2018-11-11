@@ -272,11 +272,12 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
         # Add dataset count
         pkg_dict['num_datasets'] = len(pkg_dict['referenced_datasets'])
 
-        # Load methodology
-        methodology = pkg_dict.get('methodology')
-        if methodology and not isinstance(methodology, dict):
-            pkg_dict['methodology'] = tk.get_action('ckanext_showcase_show')(
-                {'model': ckan_model}, {'id': methodology})
+        # Load methodology dict
+        methodology_id = pkg_dict.get('methodology')
+        methodology_dict = pkg_dict.get('methodology_dict')
+        if methodology_id and not methodology_dict:
+            pkg_dict['methodology_dict'] = tk.get_action('ckanext_showcase_show')(
+                {'model': ckan_model}, {'id': methodology_id})
 
         return pkg_dict
 
