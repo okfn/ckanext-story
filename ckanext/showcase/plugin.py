@@ -108,6 +108,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             'get_related_stories_for_display': showcase_helpers.get_related_stories_for_display,
             'get_related_datasets_for_display': showcase_helpers.get_related_datasets_for_display,
             'get_methodologies_for_form': showcase_helpers.get_methodologies_for_form,
+            'get_author_profiles_for_form': showcase_helpers.get_author_profiles_for_form,
         }
 
     # IFacets
@@ -278,6 +279,13 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
         if methodology_id and not methodology_dict:
             pkg_dict['methodology_dict'] = tk.get_action('ckanext_showcase_show')(
                 {'model': ckan_model}, {'id': methodology_id})
+
+        # Load author profile dict
+        author_profile_id = pkg_dict.get('author_profile')
+        author_profile_dict = pkg_dict.get('author_profile_dict')
+        if author_profile_id and not author_profile_dict:
+            pkg_dict['author_profile_dict'] = tk.get_action('ckanext_showcase_show')(
+                {'model': ckan_model}, {'id': author_profile_id})
 
         return pkg_dict
 

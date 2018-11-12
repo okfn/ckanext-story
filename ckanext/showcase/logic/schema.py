@@ -80,6 +80,9 @@ def showcase_base_schema():
     schema['author_workplace'] = [
         toolkit.get_validator('ignore_missing'),
         toolkit.get_converter('convert_to_extras')]
+    schema['author_profile'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_converter('convert_to_extras')]
 
     # Extras (conditional)
     if config.get('disqus.name'):
@@ -178,6 +181,9 @@ def showcase_show_schema():
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
     schema['author_workplace'] = [
+        toolkit.get_converter('convert_from_extras'),
+        toolkit.get_validator('ignore_missing')]
+    schema['author_profile'] = [
         toolkit.get_converter('convert_from_extras'),
         toolkit.get_validator('ignore_missing')]
 

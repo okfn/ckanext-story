@@ -99,7 +99,7 @@
   {% block metadata_fields %}
 
     {% block package_metadata_story_type %}
-      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'White papers / Research'},{'value': 'Blog post'}], selected=data.story_type, error=errors.story_type) }}
+      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'Author Profiles'},{'value': 'White papers / Research'},{'value': 'Blog post'}], selected=data.story_type, error=errors.story_type) }}
     {% endblock %}
 
     {% block package_metadata_methodology %}
@@ -115,6 +115,7 @@
       {{ form.input('author_email', label=_('Submitter email'), id='field-author-email', placeholder=_('joe@example.com'), value=data.author_email, error=errors.author_email, classes=['control-medium']) }}
       {{ form.input('author_title', label=_('Submitter title'), id='field-author-title', placeholder=_('Title'), value=data.author_title, error=errors.author_title, classes=['control-medium']) }}
       {{ form.input('author_workplace', label=_('Submitter workplace'), id='field-author-workplace', placeholder=_('Title'), value=data.author_workplace, error=errors.author_workplace, classes=['control-medium']) }}
+      {{ form.select('author_profile', label='Author Profile', id='field-author_profile', options=h.get_author_profiles_for_form(), selected=data.author_profile, error=errors.author_profile) }}
     {% endblock %}
 
     {% block package_metadata_allow_commenting %}
