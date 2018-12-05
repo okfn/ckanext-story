@@ -228,7 +228,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
 
         # Rendered notes
         pkg_dict[u'showcase_notes_formatted'] = \
-            h.render_markdown(pkg_dict['notes'], allow_html=True)
+            h.render_markdown(pkg_dict['notes'], allow_html=True, auto_link=False)
 
         # Init referenced datasets
         dataset_names = set()
