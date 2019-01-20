@@ -76,22 +76,36 @@ def get_groups_for_form(selected_groups=[]):
     return groups
 
 
-def get_related_datasets_for_form(selected_ids=[], exclude_ids=[]):
+def get_related_datasets_for_form(selected_ids=[], exclude_ids=[], topic_name=None):
     context = {'model': model}
 
-    # Get search results
-    search_datasets = toolkit.get_action('package_search')
-    search = search_datasets(context, {
-        'fq': 'dataset_type:dataset',
-        'include_private': False,
-        'sort': 'organization asc, title asc',
-    })
+    # Get packages
+    limit = 200  # ckan hard-limit is 1000
+    page = 1
+    packages = []
+    while True:
+        query = {
+            'fq': 'dataset_type:dataset',
+            'include_private': False,
+            'sort': 'organization asc, title asc',
+            'rows': limit,
+            'start': limit * (page - 1),
+        }
+        if topic_name:
+            query['q'] = 'groups:%s' % topic_name
+        response = tk.get_action('package_search')(context, query)
+        results = response.get('results', [])
+        if len(results):
+            packages.extend(results)
+            page = page + 1
+        else:
+            break
 
     # Get orgs
     orgs = []
     current_org = None
     selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
-    for package in search['results']:
+    for package in packages:
         if package['id'] in exclude_ids:
             continue
         if package['owner_org'] != current_org:
@@ -105,21 +119,35 @@ def get_related_datasets_for_form(selected_ids=[], exclude_ids=[]):
     return orgs
 
 
-def get_related_stories_for_form(selected_ids=[], exclude_ids=[]):
+def get_related_stories_for_form(selected_ids=[], exclude_ids=[], topic_name=None):
     context = {'model': model}
 
-    # Get search results
-    search_datasets = tk.get_action('package_search')
-    search = search_datasets(context, {
-        'fq': 'dataset_type:showcase',
-        'include_private': False,
-        'sort': 'organization asc, title asc',
-    })
+    # Get packages
+    limit = 200  # ckan hard-limit is 1000
+    page = 1
+    packages = []
+    while True:
+        query = {
+            'fq': 'dataset_type:showcase',
+            'include_private': False,
+            'sort': 'organization asc, title asc',
+            'rows': limit,
+            'start': limit * (page - 1),
+        }
+        if topic_name:
+            query['q'] = 'groups:%s' % topic_name
+        response = tk.get_action('package_search')(context, query)
+        results = response.get('results', [])
+        if len(results):
+            packages.extend(results)
+            page = page + 1
+        else:
+            break
 
     # Get datasets
     datasets = []
     selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
-    for package in search['results']:
+    for package in packages:
         dataset = {'text': package['title'], 'value': package['id']}
         if package['id'] in exclude_ids:
             continue
@@ -138,8 +166,8 @@ def get_related_datasets_for_display(value):
     ids = value if isinstance(value, list) else value.strip('{}').split(',')
     for id in ids:
         try:
-            dataset = toolkit.get_action('package_show')(context, {'id': id})
-            href = toolkit.url_for('dataset_read', id=dataset['name'], qualified=False)
+            dataset = tk.get_action('package_show')(context, {'id': id})
+            href = tk.url_for('dataset_read', id=dataset['name'], qualified=False)
             datasets.append({'text': dataset['title'], 'href': href})
         except tk.ObjectNotFound:
             pass
