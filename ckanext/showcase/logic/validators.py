@@ -1,6 +1,7 @@
 import logging
 
 from ckan.plugins import toolkit as tk
+import ckanext.showcase.logic.helpers as showcase_helpers
 
 _ = tk._
 Invalid = tk.Invalid
@@ -50,7 +51,7 @@ def convert_package_name_or_id_to_id_for_type_showcase(package_name_or_id,
 
 def convert_group_names_to_group_objects(value):
     groups = []
-    items = value if isinstance(value, list) else (value or '').strip('{}').split(',')
+    items = showcase_helpers.normalize_list(value)
     for item in items:
         groups.append(item if isinstance(item, dict) else {'name': item})
     return groups
