@@ -253,7 +253,7 @@ class ShowcasePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
 
         # Add linked datasets to referenced datasets
         value = pkg_dict.get('related_datasets', [])
-        ids = value if isinstance(value, list) else value.strip('{}').split(',')
+        ids = showcase_helpers.normalize_list(value)
         for id in ids:
             try:
                 dataset = tk.get_action('package_show')({'model': ckan_model}, {'id': id})

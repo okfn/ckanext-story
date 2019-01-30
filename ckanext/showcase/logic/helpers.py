@@ -104,7 +104,7 @@ def get_related_datasets_for_form(selected_ids=[], exclude_ids=[], topic_name=No
     # Get orgs
     orgs = []
     current_org = None
-    selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
+    selected_ids = normalize_list(selected_ids)
     for package in packages:
         if package['id'] in exclude_ids:
             continue
@@ -146,7 +146,7 @@ def get_related_stories_for_form(selected_ids=[], exclude_ids=[], topic_name=Non
 
     # Get datasets
     datasets = []
-    selected_ids = selected_ids if isinstance(selected_ids, list) else selected_ids.strip('{}').split(',')
+    selected_ids = normalize_list(selected_ids)
     for package in packages:
         dataset = {'text': package['title'], 'value': package['id']}
         if package['id'] in exclude_ids:
@@ -163,7 +163,7 @@ def get_related_datasets_for_display(value):
 
     # Get datasets
     datasets = []
-    ids = value if isinstance(value, list) else value.strip('{}').split(',')
+    ids = normalize_list(value)
     for id in ids:
         try:
             dataset = tk.get_action('package_show')(context, {'id': id})
@@ -180,7 +180,7 @@ def get_related_stories_for_display(value):
 
     # Get datasets
     datasets = []
-    ids = value if isinstance(value, list) else value.strip('{}').split(',')
+    ids = normalize_list(value)
     for id in ids:
         try:
             dataset = tk.get_action('package_show')(context, {'id': id})
@@ -210,3 +210,12 @@ def get_author_profiles_for_form():
         'sort': 'organization asc, title asc',
     })['results']
     return [{'value': ''}] + [{'text': story['title'], 'value': story['id']} for story in stories]
+
+
+def normalize_list(value):
+    # It takes into account that ''.split(',') == ['']
+    if not value:
+        return []
+    if isinstance(value, list):
+        return value
+    return value.strip('{}').split(',')
