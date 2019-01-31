@@ -93,6 +93,10 @@
 
   {% block metadata_fields %}
 
+    {% block package_metadata_story_posted %}
+      {{ form.input('story_date', type='date', label=_('Story date'), id='field-story_date', value=data.story_date, error=errors.story_date, classes=['control-medium']) }}
+    {% endblock %}
+
     {% block package_metadata_story_type %}
       {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'Author Profiles'},{'value': 'White papers / Research'},{'value': 'Blog post'}], selected=data.story_type, error=errors.story_type) }}
     {% endblock %}
