@@ -36,7 +36,7 @@
 
       {% block package_basic_fields_related_datasets %}
         <div class="form-group control-full control-select">
-          <label class="control-label" for="field-related-datasets">Related datasets</label>
+          <label class="control-label" for="field-related-datasets">Linked datasets</label>
           <div class="controls ">
             <select name="related_datasets" id="field-related-datasets" multiple="multiple" style="width: 100%">
             {% for org in h.get_related_datasets_for_form(selected_ids=data.get('related_datasets', [])) %}
@@ -49,7 +49,7 @@
             </select>
             <div class="info-block ">
               <i class="fa fa-info-circle"></i>
-              Mark as related one or more datasets
+              Mark as linked one or more datasets
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
 
       {% block package_basic_fields_related_stories %}
         <div class="form-group control-full control-select">
-          <label class="control-label" for="field-related-stories">Related stories</label>
+          <label class="control-label" for="field-related-stories">Linked stories</label>
           <div class="controls ">
             <select name="related_stories" id="field-related-stories" multiple="multiple" style="width: 100%">
               {% for dataset in h.get_related_stories_for_form(selected_ids=data.get('related_stories', []), exclude_ids=[data.get('id')]) %}
@@ -66,7 +66,7 @@
             </select>
             <div class="info-block ">
               <i class="fa fa-info-circle"></i>
-              Mark as related one or more stories
+              Mark as linked one or more stories
             </div>
           </div>
         </div>
@@ -92,6 +92,10 @@
   {% endblock %}
 
   {% block metadata_fields %}
+
+    {% block package_metadata_story_posted %}
+      {{ form.input('story_date', type='date', label=_('Story date'), id='field-story_date', value=data.story_date, error=errors.story_date, classes=['control-medium']) }}
+    {% endblock %}
 
     {% block package_metadata_story_type %}
       {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'Author Profiles'},{'value': 'White papers / Research'},{'value': 'Blog post'}], selected=data.story_type, error=errors.story_type) }}
