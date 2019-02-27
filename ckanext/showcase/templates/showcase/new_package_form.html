@@ -98,7 +98,7 @@
     {% endblock %}
 
     {% block package_metadata_story_type %}
-      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data stories'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'Author Profiles'},{'value': 'White papers / Research'},{'value': 'Blog post'}], selected=data.story_type, error=errors.story_type) }}
+      {{ form.select('story_type', label='Story type', id='field-story_type', options=[{'value': 'Data Articles'},{'value': 'Visualizations'},{'value': 'Interviews / Profiles'},{'value': 'Methodologies'},{'value': 'Community Profiles'},{'value': 'White papers / Research'},{'value': 'Blog Post'}], selected=data.story_type, error=errors.story_type) }}
     {% endblock %}
 
     {% block package_metadata_methodology %}

@@ -204,7 +204,7 @@ def get_methodologies_for_form():
 
 def get_author_profiles_for_form():
     stories = tk.get_action('package_search')({'model': model}, {
-        'q': 'story_type:"Author Profiles"',
+        'q': 'story_type:"Community Profiles"',
         'fq': 'dataset_type:showcase',
         'include_private': False,
         'sort': 'organization asc, title asc',
